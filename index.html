@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>螞蟻飼養指南</title>
+    <style>
+        /* Global Styles & Font */
+        :root {
+            --primary-green: #6FD056;
+            --light-gray: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-dark: #222222;
+            --text-light: #666666;
+            --border-color: #e8e8e8;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* App Container to simulate a phone screen */
+        .app-container {
+            width: 100%;
+            max-width: 414px; /* iPhone 11 Pro Max width */
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1;
+            padding-bottom: 90px; /* Space for the fixed bottom nav */
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: var(--card-bg);
+        }
+
+        .app-header-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--text-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 300px;
+            
+            /*
+            *   ==================================================
+            *   [图片替换点 1]：顶部主背景图 (Hero Section)
+            *   ==================================================
+            *   将下面的 'url(...)' 中的链接替换为您的图片链接。
+            *   您可以使用网络链接，或将图片与此html文件放于同一文件夹后，直接使用文件名，例如: url('my-background.jpg')
+            */
+            background-image: url('https://storage.googleapis.com/pai-images/e7e6f315a6b04313b6329c366e60b83e.jpeg');
+            
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 300px;
+            margin: 15px auto;
+            opacity: 0.9;
+        }
+
+        .hero .btn {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .hero .btn:hover {
+            background-color: #5ab843;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 25px 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        /* Beginner's Guide */
+        .guide-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .guide-text {
+            flex: 1;
+        }
+
+        .guide-text h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .guide-text p {
+            margin: 0 0 15px 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .guide-text .btn-read-more {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .guide-text .btn-read-more:hover {
+            background-color: #e1e3e6;
+        }
+
+        .guide-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Species Spotlights */
+        .species-spotlights .card-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 15px; /* for shadow visibility */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .species-spotlights .card-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .species-card {
+            flex: 0 0 150px; /* Do not shrink, do not grow, base width 150px */
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .species-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .species-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .species-card-content {
+            padding: 12px;
+        }
+
+        .species-card h3 {
+            font-size: 1rem;
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .species-card p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Quick Care Tips */
+        .quick-tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .tip-item {
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 0 20px 0; /* Extra padding at bottom for notch */
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .nav-item span {
+            font-size: 0.75rem;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            color: var(--primary-green);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!--
+    ==================================================
+    图片替换总指南 (Image Replacement Guide)
+    ==================================================
+    您可以通过两种方式为下方的图片提供链接：
+
+    1. 使用网络链接: 
+       直接复制任何网络图片的地址，粘贴到指定位置的 '...' 中。
+       例如: 'https://some-website.com/image.jpg'
+
+    2. 使用本地文件 (推荐):
+       - 将您的图片文件 (例如 'my-ant.jpg') 和这个 index.html 文件放在同一个文件夹里。
+       - 然后直接使用文件名作为链接。
+       例如: 'my-ant.jpg'
+
+    具体需要替换的位置已在下方代码中用 "[图片替换点 X]" 标记出来。
+    -->
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-header-title">Ant Keeping</h1>
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>              
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Discover the Fascinating World of Ant Keeping</h1>
+                    <p>Explore the intricate societies of ants and embark on your journey into the captivating hobby.</p>
+                    <a href="#" class="btn">Get Started</a>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Beginner's Guide</h2>
+                <div class="guide-card">
+                    <div class="guide-text">
+                        <h3>Introduction to Ant Keeping</h3>
+                        <p>Learn the basics of ant keeping, including setting up your first colony, and choosing the right species.</p>
+                        <a href="#" class="btn-read-more">Read More</a>
+                    </div>
+                    <!--
+                    *   ==================================================
+                    *   [图片替换点 2]：新手指南旁的小图
+                    *   ==================================================
+                    *   将下方 'src' 属性中的链接替换为您的图片链接。
+                    *   别忘了更新 'alt' 属性的描述文字，这有助于可访问性。
+                    -->
+                    <img src="https://storage.googleapis.com/pai-images/911b339d73d941ceb6ffb36de69480d5.jpeg" alt="一个小型蚂蚁巢穴" class="guide-image">
+                </div>
+            </section>
+
+            <section class="content-section species-spotlights">
+                <h2 class="section-title">物種聚焦</h2>
+                <div class="card-container">
+                    
+                    <!-- [图片替换点 3.1]：物种聚焦卡片 1 -->
+                    <div class="species-card">
+                        <!-- 将下方 'src' 替换为木蚁图片链接, 并更新 'alt' 描述 -->
+                        <img src="https://storage.googleapis.com/pai-images/4b17163836794695a452a3ce3c85f7a2.jpeg" alt="賓夕法尼亞木蟻">
+                        <div class="species-card-content">
+                            <h3>賓夕法尼亞木蟻</h3>
+                            <p>大型黑色木蟻，喜愛甜食。</p>
+                        </div>
+                    </div>
+
+                    <!-- [图片替换点 3.2]：物种聚焦卡片 2 -->
+                    <div class="species-card">
+                        <!-- 将下方 'src' 替换为收割蚁图片链接, 并更新 'alt' 描述 -->
+                        <img src="https://storage.googleapis.com/pai-images/01eb652bb2d94833a64966601b0b4ed6.jpeg" alt="西方收割蟻">
+                        <div class="species-card-content">
+                            <h3>西方收割蟻</h3>
+                            <p>活躍、以種子為食，適合乾燥環境。</p>
+                        </div>
+                    </div>
+
+                    <!-- [图片替换点 3.3]：物种聚焦卡片 3 -->
+                    <div class="species-card">
+                        <!-- 将下方 'src' 替换为蜜罐蚁图片链接, 并更新 'alt' 描述 -->
+                        <img src="https://storage.googleapis.com/pai-images/a6c6e7f8d6894080a0de2490ac9a5b3a.jpeg" alt="墨西哥蜜罐蟻">
+                        <div class="species-card-content">
+                            <h3>墨西哥蜜罐蟻</h3>
+                            <p>以儲蜜工蟻聞名，外觀獨特。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- [图片替换点 3.4]：物种聚焦卡片 4 -->
+                    <div class="species-card">
+                        <!-- 将下方 'src' 替换为小黑蚁图片链接, 并更新 'alt' 描述 -->
+                        <img src="https://storage.googleapis.com/pai-images/42de72d3f74d47c2af244199c968e745.jpeg" alt="黑色小蟻">
+                        <div class="species-card-content">
+                            <h3>黑色小蟻</h3>
+                            <p>體型非常小，雜食性，容易逃脫。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Quick Care Tips</h2>
+                <div class="quick-tips-list">
+                    <div class="tip-item">Maintain proper humidity levels</div>
+                    <div class="tip-item">Provide a suitable nesting environment</div>
+                    <div class="tip-item">Offer a balanced diet</div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" /><path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" /></svg>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c1.358 0 2.662-.308 3.808-.876m-7.616 0A9.006 9.006 0 0112 3c1.358 0 2.662.308 3.808.876m-7.616 0A9.006 9.006 0 003.284 9.253m17.432 0A9.006 9.006 0 0112 21c-1.358 0-2.662-.308-3.808-.876m7.616 0A9.006 9.006 0 0020.716 9.253M12 3a9.004 9.004 0 00-8.716 6.747M12 3c-1.358 0-2.662.308-3.808.876m7.616 0A9.006 9.006 0 0112 21c-1.358 0-2.662-.308-3.808-.876M3.284 9.253A9.006 9.006 0 0112 3m0 18a9.006 9.006 0 008.716-6.747M3.284 9.253A9.006 9.006 0 0012 21m0-18a9.006 9.006 0 00-8.716 6.747m8.716 0A9.006 9.006 0 013.284 9.253" /></svg>
+                <span>Species</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                <span>Care</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
+                <span>Resources</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>
